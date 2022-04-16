@@ -86,19 +86,31 @@ userRouter.put(`/:userId`, async (req, res) => {
             return res.status(400).send({err: "first and last name are strings"});
         }
 
-        let updateBody = {};
+        // let updateBody = {};
+
+        // if (age) {
+        //     updateBody.age = age;
+        // }
+
+        // if (name) {
+        //     updateBody.name = name;
+        // }
+
+        // const user = await User.findByIdAndUpdate(userId, updateBody, {
+        //     new: true   // true 해주지 않으면 업데이트 되기 전 문서를 리턴한다.
+        // });
+
+        let user = await User.findById(userId);
 
         if (age) {
-            updateBody.age = age;
+            user.age = age;
         }
 
         if (name) {
-            updateBody.name = name;
+            user.name = name;
         }
 
-        const user = await User.findByIdAndUpdate(userId, updateBody, {
-            new: true   // true 해주지 않으면 업데이트 되기 전 문서를 리턴한다.
-        });
+        await user.save();
 
         return res.send({ user });
 
