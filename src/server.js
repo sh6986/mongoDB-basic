@@ -15,10 +15,43 @@ const server = async () => {
 
         app.use(express.json());
     
-        app.get(`/user`, (req, res) => {
-            // return res.send({users: users});
+        /**
+         * 사용자 전체 조회
+         */
+        app.get(`/user`, async (req, res) => {
+            try {
+                const users = await User.find({});  // 조건없이 다 조회
+                return res.send({ users });
+            } catch (err) {
+                return res.status(500).send({err: err.message});
+            }
+        });
+
+        /**
+         * 사용자 단건 조회
+         */
+        app.get(`/user/:userId`, async (req, res) => {
+            try {
+                const { userId } = req.params;
+
+                if (!mongoose.isValidObjectId(userId)) {     // objectId 형식에 맞는지 확인
+                    return res.status(400).send({err: 'invalid userId'});
+                }
+
+                // findOne 첫번째인자는 필터조건
+                const user = await User.findOne({
+                    _id: userId
+                });
+                return res.send({ user });
+            } catch (err) {
+                console.log(err);
+                return res.status(500).send({err: err.message});
+            }
         });
         
+        /**
+         * 사용자 등록
+         */
         app.post(`/user`, async (req, res) => {
             try {
                 let { username, name } = req.body;
@@ -42,6 +75,29 @@ const server = async () => {
         
         app.listen(3000, () => {
             console.log('server listening on port 3000');
+        });
+
+        /**
+         * 사용자 삭제
+         */
+        app.delete(`/user/:userId`, async (req, res) => {
+            try {
+                const { userId } = req.params;
+                
+                if (!mongoose.isValidObjectId(userId)) {
+                    return res.status(400).send('invalid userId');
+                }
+
+                const user = await User.findOneAndDelete({
+                    _id: userId
+                });
+
+                return res.send({ user });
+
+            } catch (err) {
+                console.log(err);
+                return res.status(500).send({err: err.message});
+            }
         });
 
     } catch (err) {
