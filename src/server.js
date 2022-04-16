@@ -78,6 +78,44 @@ const server = async () => {
         });
 
         /**
+         * 사용자 수정
+         */
+        app.put(`/user/:userId`, async (req, res) => {
+            try {
+                const { userId } = req.params;
+
+                if (!mongoose.isValidObjectId(userId)) {
+                    return res.status(400).send('invalid userId');
+                }
+
+                const { age } = req.body;
+
+                if (!age) {
+                    return res.status(400).send({err: "age is required"});
+                }
+
+                if (typeof age !== 'number') {
+                    return res.status(400).send({err: "age must be a number"});
+                }
+
+                const user = await User.findByIdAndUpdate(userId, {
+                    $set: {
+                        age
+                        // age: age
+                    }
+                }, {
+                    new: true   // true 해주지 않으면 업데이트 되기 전 문서를 리턴한다.
+                });
+
+                return res.send({ user });
+
+            } catch (err) {
+                console.log(err);
+                return res.status(500).send({err: err.message});
+            }
+        });
+
+        /**
          * 사용자 삭제
          */
         app.delete(`/user/:userId`, async (req, res) => {
