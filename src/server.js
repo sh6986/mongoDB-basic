@@ -1,8 +1,6 @@
 const express = require('express');
 const app = express();
-const { userRouter } = require('./routes/userRoute');
-const { blogRouter } = require('./routes/blogRoute');
-const { commentRouter } = require('./routes/commentRoute');
+const { userRouter, blogRouter } = require('./routes');
 const mongoose = require('mongoose');
 
 const dotenv = require('dotenv');
