@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
+const { Schema, model } = require('mongoose');
 
 // 첫번째 인자로 객체를 받고 (객체안의 key value 값 포함), 두번째는 옵션 정보
-const UserSchema = new mongoose.Schema({
+const UserSchema = new Schema({
     username: {
         type: String, 
         required: true
@@ -24,7 +24,7 @@ const UserSchema = new mongoose.Schema({
     // 데이터 생성시 생성시간 createdAt을 만들고 수정시간 updateAt을 수정해준다.
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = model('user', UserSchema);
 // users 라는 이름으로 컬렉션이 생성된다.
 
 module.exports = { User };
