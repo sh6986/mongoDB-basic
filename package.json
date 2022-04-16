@@ -1,0 +1,22 @@
+{
+  "name": "mongodb-basic",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "dev": "nodemon server"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sh6986/mongoDB-basic/issues"
+  },
+  "homepage": "https://github.com/sh6986/mongoDB-basic#readme",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "mongoose": "^6.3.0",
+    "nodemon": "^2.0.15"
+  }
+}
