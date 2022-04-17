@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const { userRouter, blogRouter } = require('./routes');
 const mongoose = require('mongoose');
+const { generateFakeData } = require('../faker');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -12,6 +13,9 @@ const server = async () => {
     try {
         await mongoose.connect(MONGO_URI);
         mongoose.set('debug', true);        // 쿼리 로그로 찍혀서 볼 수 있다.
+        
+        // await generateFakeData(100, 10, 30);
+        
         console.log('MongoDB connected');
 
         app.use(express.json());
