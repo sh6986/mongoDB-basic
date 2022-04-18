@@ -46,7 +46,14 @@ blogRouter.post(`/`, async (req, res) => {
 
 blogRouter.get(`/`, async (req, res) => {
     try {
-        const blogs = await Blog.find({});
+        // populate: 스키마에 ref: 'user'로 설정해놨으므로 이 아이디를 가지고 user를 채워줌
+        const blogs = await Blog.find({})
+            .limit(20)
+            .populate([
+                {path: 'user'}, 
+                {path: 'comments', populate: {path: 'user'}}
+            ]);    // blog 스키마에 comments는 따로 ref를 걸지 않았으므로 가상으로 만들어줬다.(스키마파일에)
+
         return res.send({ blogs });
     } catch (err) {
         console.log(err);

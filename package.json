@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server",
-    "dev": "nodemon src/server"
+    "dev": "nodemon --ignore client.js src/server"
   },
   "author": "",
   "license": "ISC",
@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/sh6986/mongoDB-basic#readme",
   "dependencies": {
+    "axios": "^0.26.1",
     "dotenv": "^16.0.0",
     "express": "^4.17.3",
     "faker": "^5.5.3",
